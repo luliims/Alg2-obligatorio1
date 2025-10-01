@@ -1,10 +1,16 @@
-#ifndef MINHEAP
-#define MINHEAP
+#ifndef MINHEAPNODOS
+#define MINHEAPNODOS
 #include <cassert>
 
-class minHeap{
+struct Nodo { //adapto el minHeap para el ejercicio 4
+    int valor;
+    int listaId;
+    int pos;
+};
+
+class minHeapNodos{
     private:
-        int * vec;
+        Nodo * vec;
         int capacidad;
         int primeroLibre;
 
@@ -16,12 +22,12 @@ class minHeap{
             return pos / 2;
         }
 
-        int funcionComparadora(int a, int b){
-            return a - b;
+        int funcionComparadora(Nodo a, Nodo b){
+            return a.valor - b.valor;
         }
 
         void intercambiar(int posPadre, int pos){
-            int aux = vec[posPadre];
+            Nodo aux = vec[posPadre];
             vec[posPadre] = vec[pos];
             vec[pos] = aux;
         }
@@ -71,18 +77,18 @@ class minHeap{
         }
 
     public:
-        minHeap(int capacidad){
-            this->vec = new int[capacidad + 1];
+        minHeapNodos(int capacidad){
+            this->vec = new Nodo[capacidad + 1];
             this->capacidad = capacidad;
             this->primeroLibre = 1;
         }
 
-        ~minHeap(){
+        ~minHeapNodos(){
            delete[] this->vec; 
         }
 
 
-        void insertar(int dato){
+        void insertar(Nodo dato){
             assert(!this->estaLleno());
             if (!this->estaLleno()) {
                 this->vec[this->primeroLibre] = dato;
@@ -98,7 +104,7 @@ class minHeap{
             hundir(1);
         }
 
-        int tope(){
+        Nodo tope(){
             assert(this->primeroLibre > 1);
             return this->vec[1];
         }
