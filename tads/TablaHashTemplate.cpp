@@ -1,3 +1,5 @@
+//=============== NO SE ESTA USANDO ===============
+
 #ifndef TABLA_HASH // Evitan que el header se incluya dos veces en la misma TU (traduction unit). Si ya está definido TABLA_HASH, no se vuelve a compilar este archivo.
 #define TABLA_HASH
 #include <cassert>

@@ -1,3 +1,6 @@
+//=============== NO SE ESTA USANDO ===============
+
+
 #ifndef LIST_IMP
 #define LIST_IMP
 
