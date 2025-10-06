@@ -100,13 +100,15 @@ private:
         nodo = NULL;
     }
 
-    // Solo para depurar local ----------------- REVISAR SI DEJAR ESTO
+    // [DEPURAR] Recorre e imprime el árbol (solo para depuración, no se usa en la entrega)
+    /*
     void inOrdenAux(NodoAVLId* nodo){
         if (!nodo) return;
         inOrdenAux(nodo->izq);
         cout << nodo->jugador->id << " " << nodo->jugador->nombre << " " << nodo->jugador->puntaje << "\n";
         inOrdenAux(nodo->der);
     }
+    */
 
     // FIND --> Búsqueda recursiva por ID (no modifica el árbol)
     const NodoAVLId* buscarNodo(const NodoAVLId* nodo, int id) const {

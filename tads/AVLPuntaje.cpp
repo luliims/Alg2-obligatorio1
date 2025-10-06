@@ -95,20 +95,21 @@ private:
     }
 
     int contarMayoresOIguales(NodoAVLPuntaje* nodo, int puntaje) {
+        //Si el nodo no existe, no hay jugadores en este camino
         if (nodo == NULL) return 0;
 
         if (nodo->puntaje == puntaje) {
-            // cuenta los jugadores con este puntaje + todos los del subárbol derecho
+            // contar los jugadores con el puntaje + todos los del subárbol derecho
             int der = nodo->der ? nodo->der->cantSub : 0;
             return nodo->cantJug + der;
         }
         else if (nodo->puntaje > puntaje) {
-            // este nodo y todo el subárbol derecho cuentan
+            // este nodo y todo el subárbol derecho cuentan, pero puede haber más en la izquierda
             int der = nodo->der ? nodo->der->cantSub : 0;
             return nodo->cantJug + der + contarMayoresOIguales(nodo->izq, puntaje);
         }
         else {
-            // este nodo y su izquierda son menores → busco en la derecha
+            // sería el caso que el nodo y su izquierda son menores, enotnces busco en la derecha
             return contarMayoresOIguales(nodo->der, puntaje);
         }
     }

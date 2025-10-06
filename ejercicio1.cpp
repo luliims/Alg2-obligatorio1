@@ -2,8 +2,8 @@
 //#include <limits>
 #include <iostream>
 #include <string>
-#include "tads/AVLId.cpp"
-#include "tads/AVLPuntaje.cpp"   // nuevo árbol por puntaje
+#include "tads/AVLId.cpp"        // árbol por ID
+#include "tads/AVLPuntaje.cpp"   // árbol por puntaje
 #include "tads/utils.h"
 
 
@@ -27,9 +27,6 @@ int main() {
             int id, puntaje;
             string nombre;            
             cin >> id >> nombre >> puntaje;
-
-            //avlId.insertarJugador(id, nombre, puntaje); ======= VIEJO
-
             //Si se insertó en AVLId, entonces actualizar puntaje
             bool nuevo = avlId.insertarJugador(id, nombre, puntaje);
             if (nuevo) {
@@ -37,7 +34,6 @@ int main() {
             }
 
         } else {
-            // Consumimos parámetros para no romper el cursor de entrada --- REVISAR QUE ES ESTO BIEN
             if (op == "FIND")  { 
                 int id;
                 cin >> id;
@@ -75,11 +71,6 @@ int main() {
             }
         }        
     }
-    //para probar luego borrar
-    //#ifdef DEBUG
-    //avlId.inOrder();     // Muestra "id nombre puntaje" en orden por ID
-    //#endif
-    //borrar hasta aca
-
+   
     return 0;
 }
