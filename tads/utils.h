@@ -23,10 +23,10 @@ struct NodoAVLId {
 
 // Nodo para el AVL por Puntaje
 struct NodoAVLPuntaje {
-    int puntaje;             // clave
-    int cantJug;             // cantidad de jugadores que tienen EXACTAMENTE este puntaje
-    int minId;               // menor ID con este puntaje (en caso de empate)
-    int cantSub;             // cantidad total de jugadores en todo el subárbol (es decir: cantJug + izquierdo.cantSub + derecho.cantSub)
+    int puntaje;        // clave
+    int cantJug;        // [PARA RANK] cantidad de jugadores que tienen el puntaje EXACTO 
+    int minId;          // [PARA TOP1] menor ID con este puntaje (en caso de empate) 
+    int cantSub;        // [PARA RANK] cantidad de jugadores que hay en total en el subárbol (o sea: cantJug + izq->cantSub + der->cantSub)
     int altura;
     NodoAVLPuntaje* izq;
     NodoAVLPuntaje* der;

@@ -49,15 +49,18 @@ int main() {
                 }
              }
 
-            else if (op == "RANK") { int dummy; cin >> dummy; }
-
+            else if (op == "RANK") { 
+                int p;
+                cin >> p;
+                cout << avlPuntaje.rank(p) << "\n";
+            }
             
              else if (op == "TOP1") {
                 int mejorId, mejorPuntaje;
                 if (!avlPuntaje.vacio() && avlPuntaje.top1(mejorId, mejorPuntaje)) {
                     const Jugador* j = avlId.findId(mejorId);
                     if (j) {
-                        std::cout << j->nombre << " " << j->puntaje << "\n";
+                        cout << j->nombre << " " << j->puntaje << "\n";
                     } else {
                         // En caso que no haya jugadores se muestra sin_jugadores
                         cout << "sin_jugadores\n";

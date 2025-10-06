@@ -94,6 +94,27 @@ private:
         return creado;
     }
 
+    int contarMayoresOIguales(NodoAVLPuntaje* nodo, int puntaje) {
+        if (nodo == NULL) return 0;
+
+        if (nodo->puntaje == puntaje) {
+            // cuenta los jugadores con este puntaje + todos los del subárbol derecho
+            int der = nodo->der ? nodo->der->cantSub : 0;
+            return nodo->cantJug + der;
+        }
+        else if (nodo->puntaje > puntaje) {
+            // este nodo y todo el subárbol derecho cuentan
+            int der = nodo->der ? nodo->der->cantSub : 0;
+            return nodo->cantJug + der + contarMayoresOIguales(nodo->izq, puntaje);
+        }
+        else {
+            // este nodo y su izquierda son menores → busco en la derecha
+            return contarMayoresOIguales(nodo->der, puntaje);
+        }
+    }
+
+
+
 public:
     AVLPuntaje(): raiz(NULL), maxNode(NULL) {}
 
@@ -109,4 +130,9 @@ public:
         mejorPuntaje = maxNode->puntaje;
         return true;
     }
+
+    int rank(int puntaje) {
+        return contarMayoresOIguales(raiz, puntaje);
+    }
+
 };
