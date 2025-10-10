@@ -7,7 +7,7 @@ struct Nodo {
     int pos;
 };
 
-class minHeapNodos {
+class minHeap{
 private:
     Nodo * vec;
     int capacidad;
@@ -23,8 +23,8 @@ private:
     void hundir(int pos);
 
 public:
-    minHeapNodos(int capacidad);
-    ~minHeapNodos();
+    minHeap(int capacidad);
+    ~minHeap();
 
     void insertar(Nodo dato);
     void eliminar();
