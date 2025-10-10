@@ -1,5 +1,5 @@
-#ifndef MINHEAP
-#define MINHEAP
+#ifndef MINHEAPNODOS
+#define MINHEAPNODOS
 
 struct Nodo {
     int valor;
