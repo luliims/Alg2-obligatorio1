@@ -2,7 +2,7 @@
 #include <string>
 #include <iostream>
 #include <limits>
-#include "minHeap.h"
+#include "tads/minHeap.h"
 #include <vector>
 
 using namespace std;
