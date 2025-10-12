@@ -7,11 +7,15 @@
 using namespace std;
 
 int main() {
-    int K;
-    cin >> K;
-    ListImp<int> *lists = new ListImp<int>[K];
-    minHeap hp(K);
-    for (int i = 0; i < K; i++) {
+    int k;
+    cin >> k;
+    while(k<1 || k>1000){
+        cout << "Debe de ser un valor entre 1 y 1000 \n";
+        cin >> k;
+    }
+    ListImp<int> *lists = new ListImp<int>[k];
+    minHeap hp(k);
+    for (int i = 0; i < k; i++) {
         int N;
         cin >> N;
         for (int j = 0; j < N; j++) {
@@ -20,7 +24,7 @@ int main() {
             lists[i].insert(val);
         }
     }
-    for (int i = 0; i < K; i++) { //inserto primer nodo de cada lista
+    for (int i = 0; i < k; i++) { //inserto primer nodo de cada lista
         if (!lists[i].isEmpty()) {
             Nodo n;
             n.valor = lists[i].get(0);
