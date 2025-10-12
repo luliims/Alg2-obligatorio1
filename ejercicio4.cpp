@@ -1,4 +1,7 @@
+#include <cassert>
+#include <string>
 #include <iostream>
+#include <limits>
 #include "tads/minHeap.cpp"
 #include "tads/ListImp.cpp"
 using namespace std;
