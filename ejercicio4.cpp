@@ -6,54 +6,41 @@ using namespace std;
 int main() {
     int K;
     cin >> K;
-
-    // Crear K listas
-    ListImp<int> *listas = new ListImp<int>[K];
-
-    // Leer cada lista
+    ListImp<int> *lists = new ListImp<int>[K];
+    minHeap hp(K);
     for (int i = 0; i < K; i++) {
         int N;
         cin >> N;
         for (int j = 0; j < N; j++) {
-            int valor;
-            cin >> valor;
-            listas[i].insert(valor);
+            int val;
+            cin >> val;
+            lists[i].insert(val);
         }
     }
-
-    // Crear minHeap con capacidad K
-    minHeap heap(K);
-
-    // Insertar el primer elemento de cada lista
-    for (int i = 0; i < K; i++) {
-        if (!listas[i].isEmpty()) {
+    for (int i = 0; i < K; i++) { //inserto primer nodo de cada lista
+        if (!lists[i].isEmpty()) {
             Nodo n;
-            n.valor = listas[i].get(0);  // primer elemento
-            n.listaId = i;               // de qué lista viene
-            n.pos = 0;                   // posición dentro de esa lista
-            heap.insertar(n);
+            n.valor = lists[i].get(0);
+            n.listaId = i;
+            n.pos = 0;
+            hp.insertar(n);
         }
     }
-
-    // Fusionar
-    while (!heap.estaVacio()) {
-        Nodo min = heap.tope();
-        cout << min.valor << "\n"; // imprimir el menor
-        heap.eliminar();
-
-        int listaId = min.listaId;
-        int siguientePos = min.pos + 1;
-
-        // Si hay un siguiente elemento en esa lista
-        if (siguientePos < listas[listaId].getSize()) {
+    while (!hp.estaVacio()) { //fusiono las listas en el heap
+        Nodo min = hp.tope();
+        cout << min.valor << "\n";
+        hp.eliminar();
+        int iDList = min.listaId;
+        int nextPos = min.pos + 1;
+        if (nextPos < lists[iDList].getSize()) {
             Nodo nuevo;
-            nuevo.valor = listas[listaId].get(siguientePos);
-            nuevo.listaId = listaId;
-            nuevo.pos = siguientePos;
-            heap.insertar(nuevo);
+            nuevo.valor = lists[iDList].get(nextPos);
+            nuevo.listaId = iDList;
+            nuevo.pos = nextPos;
+            hp.insertar(nuevo);
         }
     }
 
-    delete[] listas;
+    delete[] lists;
     return 0;
 }
