@@ -1,13 +1,12 @@
 #ifndef MINHEAPNODOS
 #define MINHEAPNODOS
-#include "tads/minHeap.h"
 #include <cassert>
 
-/*struct Nodo { //adapto el minHeap para el ejercicio 4
+struct Nodo { //adapto el minHeap para el ejercicio 4
     int valor;
     int listaId;
     int pos;
-};*/
+};
 
 class minHeap{
     private:
