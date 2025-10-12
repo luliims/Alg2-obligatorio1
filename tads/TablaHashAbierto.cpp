@@ -25,7 +25,21 @@ private:
 
 	void rehash()
 	{
-		// TODO: Implementar rehash
+		int nuevoTam = this->tamanio * 2;
+		Lista* nuevoArr = new Lista[nuevoTam]();
+		for (int i = 0; i < this->tamanio; i++){
+			NodoLista* ptr = arrList[i];
+			while (ptr != nullptr){
+				NodoLista* sig = ptr->sig;
+				int posNuevo = abs(this->fnHash(ptr->clave)) % nuevoTam;
+				ptr->sig = nuevoArr[posNuevo];
+				nuevoArr[posNuevo] = ptr;
+				ptr = sig;
+			}
+		}
+		delete[] arrList;
+		arrList = nuevoArr;
+		this->tamanio = nuevoTam;
 	}
 
 	float factorDeCarga()
@@ -92,18 +106,51 @@ public:
 
 	~TablaHashAbierta_Agenda()
 	{
-		// TODO: Implementar destructor
+		for (int i = 0; i < this->tamanio; i++){
+			NodoLista* ptr = arrList[i];
+			while (ptr != nullptr)
+			{
+				NodoLista* aux = ptr;
+				ptr = ptr->sig;
+				delete aux;
+			}
+		}
+		delete[] arrList;
 	}
 
 	void eliminar(string unaClave)
 	{
-		// TODO: Implementar eliminar
+		int pos = abs(this->fnHash(unaClave)) % this->tamanio;
+		NodoLista* ptr = arrList[pos];
+		NodoLista* prev = nullptr;
+
+		while (ptr != nullptr){
+			if (ptr->clave == unaClave){
+				if (prev == nullptr){
+					arrList[pos] = ptr->sig;
+				}
+				else{
+					prev->sig = ptr->sig;
+				}
+				delete ptr;
+				this->cantidadDeElementos--;
+				return;
+			}
+			prev = ptr;
+			ptr = ptr->sig;
+    	}
 	}
 
 	int buscar(string unaClave)
 	{
-		// TODO: Implementar buscar
-		return 0;	
+		int pos = abs(this->fnHash(unaClave)) % this->tamanio;
+		NodoLista* ptr = arrList[pos];
+		while (ptr != nullptr){
+			if (ptr->clave == unaClave)
+				return ptr->valor;
+			ptr = ptr->sig;
+		}
+		return -1;
 	}
 };
 
