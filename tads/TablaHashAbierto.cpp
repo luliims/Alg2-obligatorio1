@@ -8,11 +8,13 @@ struct NodoLista
 {
 	string clave;
 	int valor;
+	string dom;
+	string path;
 	string title;
 	int time;
 	NodoLista *sig;
-	NodoLista(string unaClave, int unValor, string aTitle, int aTime) : clave(unaClave), valor(unValor), title(aTitle), time(aTime), sig(0){};
-	NodoLista(string unaClave, int unValor, string aTitle, int aTime, NodoLista *unSig) : clave(unaClave), valor(unValor), title(aTitle), time(aTime), sig(unSig){};
+	NodoLista(string unaClave, int unValor, string aDom, string aPath, string aTitle, int aTime) : clave(unaClave), valor(unValor), dom(aDom), path(aPath), title(aTitle), time(aTime), sig(0){};
+	NodoLista(string unaClave, int unValor, string aDom, string aPath, string aTitle, int aTime, NodoLista *unSig) : clave(unaClave), valor(unValor), title(aTitle), time(aTime), sig(unSig){};
 };
 
 typedef NodoLista *Lista;
@@ -50,11 +52,11 @@ private:
 	}
 
 	// Retorna true si la clave ya existe
-	bool insertarRecusrivo(string unaClave, int unValor, string aTitle, int aTime, NodoLista *&ptr)
+	bool insertarRecusrivo(string unaClave, int unValor, string dom, string path, string aTitle, int aTime, NodoLista *&ptr)
 	{
 		if (ptr == NULL)
 		{
-			ptr = new NodoLista(unaClave, unValor, aTitle, aTime);
+			ptr = new NodoLista(unaClave, unValor, dom, path, aTitle, aTime);
 			return false;
 		}
 		else
@@ -66,7 +68,7 @@ private:
 				ptr->time = aTime;
 				return true;
 			}
-			else return insertarRecusrivo(unaClave, unValor, aTitle, aTime, ptr->sig);
+			else return insertarRecusrivo(unaClave, unValor, dom, path, aTitle, aTime, ptr->sig);
 		}
 	}
 
@@ -86,10 +88,10 @@ public:
 		return sum;
 	}
 
-	void insertar(string unaClave, int unValor, string aTitle, int aTime)
+	void insertar(string unaClave, int unValor, string aDom, string aPath, string aTitle, int aTime)
 	{
 		int pos = abs(this->fnHash(unaClave)) % this->tamanio;
-		if (!this->insertarRecusrivo(unaClave, unValor, aTitle, aTime, arrList[pos])) this->cantidadDeElementos++;
+		if (!this->insertarRecusrivo(unaClave, unValor, aDom, aPath, aTitle, aTime, arrList[pos])) this->cantidadDeElementos++;
 		if (this->factorDeCarga() > 0.7) this->rehash();
 	}
 
@@ -176,6 +178,72 @@ public:
 	int getTime(NodoLista* nodo){
 		return nodo->time;
 	}
+
+	int getSize(){
+		return this->cantidadDeElementos;
+	}
+
+	int contarDominio(string dominio){
+		int cont = 0;
+		int i = 0;
+		while (i < this->tamanio){
+			NodoLista* nodo = arrList[i];
+			while (nodo != nullptr){
+				if (nodo->dom == dominio){
+					cont++;
+				}
+				nodo = nodo->sig;
+			}
+			i++;
+		}
+		return cont;
+	}
+
+	string listarDominio(string dominio){
+		string dev = "";
+		int i = 0;
+		while (i < this->tamanio){
+			NodoLista* nodo = arrList[i];
+			while (nodo != nullptr){
+				if (nodo->dom == dominio){
+					dev+= "/" + nodo->path + " ";
+				}
+				nodo = nodo->sig;
+			}
+			i++;
+		}
+		return dev;
+	}
+
+	void limpiarDominio(string dominio){
+		int i = 0;
+		while (i < this->tamanio) {
+			NodoLista* nodo = arrList[i];
+			while (nodo != nullptr){
+				if (nodo->dom == dominio){
+					eliminar(nodo->clave);
+					this->cantidadDeElementos = this->cantidadDeElementos--;
+				}
+			}
+			i++;
+		}
+	}
+
+	void limpiarTotal(){
+		int i = 0;
+		while(i < this->tamanio){
+			NodoLista* ptr = arrList[i];
+			while (ptr != nullptr){
+				NodoLista* aux = ptr;
+				ptr = ptr->sig;
+				delete aux;
+			}
+			arrList[i] = nullptr; 
+			i++;
+		}
+		this->cantidadDeElementos = 0;
+	}
+
 };
 
 #endif
