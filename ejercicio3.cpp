@@ -16,8 +16,10 @@ string GET(TablaHashAbierta_Agenda &cache, string dominio, string path){
     if (nodo == nullptr){
         dev = "recurso_no_encontrado";
     }
-    else{}
-        dev = cache.getTitle(nodo) + " " + cache.getTime(nodo); 
+    else{
+        dev = cache.getTitle(nodo) + " " + to_string(cache.getTime(nodo)); 
+    }
+    return dev;
 }
 
 int main()
