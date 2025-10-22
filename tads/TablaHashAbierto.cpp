@@ -8,9 +8,11 @@ struct NodoLista
 {
 	string clave;
 	int valor;
+	string title;
+	int time;
 	NodoLista *sig;
-	NodoLista(string unaClave, int unValor) : clave(unaClave), valor(unValor), sig(0){};
-	NodoLista(string unaClave, int unValor, NodoLista *unSig) : clave(unaClave), valor(unValor), sig(unSig){};
+	NodoLista(string unaClave, int unValor, string aTitle, int aTime) : clave(unaClave), valor(unValor), title(aTitle), time(aTime), sig(0){};
+	NodoLista(string unaClave, int unValor, string aTitle, int aTime, NodoLista *unSig) : clave(unaClave), valor(unValor), title(aTitle), time(aTime), sig(unSig){};
 };
 
 typedef NodoLista *Lista;
@@ -48,11 +50,11 @@ private:
 	}
 
 	// Retorna true si la clave ya existe
-	bool insertarRecusrivo(string unaClave, int unValor, NodoLista *&ptr)
+	bool insertarRecusrivo(string unaClave, int unValor, string aTitle, int aTime, NodoLista *&ptr)
 	{
 		if (ptr == NULL)
 		{
-			ptr = new NodoLista(unaClave, unValor);
+			ptr = new NodoLista(unaClave, unValor, aTitle, aTime);
 			return false;
 		}
 		else
@@ -62,7 +64,7 @@ private:
 				ptr->valor = unValor;
 				return true;
 			}
-			else return insertarRecusrivo(unaClave, unValor, ptr->sig);
+			else return insertarRecusrivo(unaClave, unValor, aTitle, aTime, ptr->sig);
 		}
 	}
 
@@ -82,10 +84,10 @@ public:
 		return sum;
 	}
 
-	void insertar(string unaClave, int unValor)
+	void insertar(string unaClave, int unValor, string aTitle, int aTime)
 	{
 		int pos = abs(this->fnHash(unaClave)) % this->tamanio;
-		if (!this->insertarRecusrivo(unaClave, unValor, arrList[pos])) this->cantidadDeElementos++;
+		if (!this->insertarRecusrivo(unaClave, unValor, aTitle, aTime, arrList[pos])) this->cantidadDeElementos++;
 		if (this->factorDeCarga() > 0.7) this->rehash();
 	}
 

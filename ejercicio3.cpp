@@ -15,6 +15,7 @@ int main()
         cin >> n;
     }
     TablaHashAbierta_Agenda cache(n);
+    
     void PUT(string dominio, string path, string titulo, int tiempo){
         if (cache.buscar(dominio)== -1){
             cache.insertar(dominio, fnHash(path));
