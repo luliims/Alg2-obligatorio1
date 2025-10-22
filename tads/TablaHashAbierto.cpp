@@ -156,6 +156,19 @@ public:
 		}
 		return -1;
 	}
+
+	//retorna el nodo entero en lugar de solo el valor
+	NodoLista* buscarNodo(string unaClave){
+		int pos = abs(this->fnHash(unaClave)) % this->tamanio;
+		NodoLista* ptr = arrList[pos];
+		while (ptr != nullptr) {
+			if (ptr->clave == unaClave)
+				return ptr;
+			ptr = ptr->sig;
+		}
+		return nullptr;
+	}
+
 };
 
 #endif

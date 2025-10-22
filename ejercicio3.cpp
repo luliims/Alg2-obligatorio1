@@ -10,6 +10,16 @@ void PUT(TablaHashAbierta_Agenda &cache, string dominio, string path, string tit
     cache.insertar(dominio, cache.fnHash(path), titulo, tiempo);
 }
 
+string GET(TablaHashAbierta_Agenda &cache, string dominio, string path){
+    NodoLista* nodo = cache.buscarNodo(dominio);
+    string dev = "";
+    if (nodo == nullptr){
+        dev = "recurso_no_encontrado";
+    }
+    else{}
+        dev = nodo->title + " " + nodo->time; //hacer getTitle() y getTime()
+}
+
 int main()
 {
     int n;
