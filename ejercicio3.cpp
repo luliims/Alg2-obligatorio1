@@ -17,7 +17,7 @@ string GET(TablaHashAbierta_Agenda &cache, string dominio, string path){
         dev = "recurso_no_encontrado";
     }
     else{}
-        dev = nodo->title + " " + nodo->time; //hacer getTitle() y getTime()
+        dev = cache.getTitle(nodo) + " " + cache.getTime(nodo); 
 }
 
 int main()

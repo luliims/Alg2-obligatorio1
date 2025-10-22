@@ -169,6 +169,13 @@ public:
 		return nullptr;
 	}
 
+	string getTitle(NodoLista* nodo){
+		return nodo->title;
+	}
+
+	string getTime(NodoLista* nodo){
+		return nodo->time;
+	}
 };
 
 #endif
