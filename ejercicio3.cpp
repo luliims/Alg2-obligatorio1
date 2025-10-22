@@ -6,6 +6,10 @@
 
 using namespace std;
 
+void PUT(TablaHashAbierta_Agenda &cache, string dominio, string path, string titulo, int tiempo){
+    cache.insertar(dominio, cache.fnHash(path), titulo, tiempo);
+}
+
 int main()
 {
     int n;
@@ -15,10 +19,25 @@ int main()
         cin >> n;
     }
     TablaHashAbierta_Agenda cache(n);
-    
-    void PUT(string dominio, string path, string titulo, int tiempo){
-        if (cache.buscar(dominio)== -1){
-            cache.insertar(dominio, fnHash(path));
-        }
+
+    string op;
+    cin >> op;
+
+    for (auto& x : op) { //pasa op a minúsculas por si no lo escribieron bien
+        x = tolower(x);
     }
+
+    if (op == "put"){
+            string dominio, path, titulo;
+            int tiempo;
+            cin >> dominio;
+            cin >> path;
+            cin >> titulo;
+            cin >> tiempo;
+            PUT(cache, dominio, path, titulo, tiempo);
+        }   
+    return 0;
 }
+
+
+

@@ -62,6 +62,8 @@ private:
 			if (ptr->clave == unaClave)
 			{
 				ptr->valor = unValor;
+				ptr->title = aTitle;
+				ptr->time = aTime;
 				return true;
 			}
 			else return insertarRecusrivo(unaClave, unValor, aTitle, aTime, ptr->sig);
