@@ -173,7 +173,7 @@ public:
 		return nodo->title;
 	}
 
-	string getTime(NodoLista* nodo){
+	int getTime(NodoLista* nodo){
 		return nodo->time;
 	}
 };
