@@ -1,2 +1,36 @@
-*.out
+
+# binarios
 *.exe
+*.out
+
+# archivos de prueba locales
+test.in.txt
+test.out.txt
+test.myout.txt
+
+# archivos temporales de VSCode
+.vscode/
+
+# Ejercicios que no subimos aún
+#ejercicio3.cpp
+#ejercicio4.cpp
+#ejercicio5.cpp
+
+# Otros
+main.cpp
+
+#funciones/
+
+#TADs
+#tads/AVL.cpp
+tads/List.h
+tads/ListImp.cpp
+tads/minHeap.cpp
+tads/TablaHashAbierto.cpp
+tads/TablaHashTemplate.cpp
+tads/TablaHash_cerrado.cpp
+
+
+
+ 
+  
