@@ -61,12 +61,11 @@ private:
 		}
 		else
 		{
-			if (ptr->clave == unaClave)
-			{
+			if (ptr->dom == dom && ptr->path == path){ //falta que actualice el orden
 				ptr->valor = unValor;
 				ptr->title = aTitle;
 				ptr->time = aTime;
-				return true;
+				return true; 
 			}
 			else return insertarRecusrivo(unaClave, unValor, dom, path, aTitle, aTime, ptr->sig);
 		}
@@ -160,13 +159,14 @@ public:
 	}
 
 	//retorna el nodo entero en lugar de solo el valor
-	NodoLista* buscarNodo(string unaClave){
-		int pos = abs(this->fnHash(unaClave)) % this->tamanio;
-		NodoLista* ptr = arrList[pos];
-		while (ptr != nullptr) {
-			if (ptr->clave == unaClave)
-				return ptr;
-			ptr = ptr->sig;
+	NodoLista* buscarNodo(string dominio, string path) {
+		for (int i = 0; i < this->tamanio; i++) {
+			NodoLista* nodo = arrList[i];
+			while (nodo != nullptr) {
+				if (nodo->dom == dominio && nodo->path == path)
+					return nodo;
+				nodo = nodo->sig;
+			}
 		}
 		return nullptr;
 	}
@@ -185,49 +185,58 @@ public:
 
 	int contarDominio(string dominio){
 		int cont = 0;
-		int i = 0;
-		while (i < this->tamanio){
+		for (int i = 0; i < tamanio; i++){
 			NodoLista* nodo = arrList[i];
 			while (nodo != nullptr){
-				if (nodo->dom == dominio){
+				if (nodo->dom == dominio)
 					cont++;
-				}
 				nodo = nodo->sig;
 			}
-			i++;
 		}
 		return cont;
 	}
 
-	string listarDominio(string dominio){
-		string dev = "";
+	void limpiarDominio(string dominio) {
 		int i = 0;
-		while (i < this->tamanio){
+		while(i < this->tamanio){
 			NodoLista* nodo = arrList[i];
-			while (nodo != nullptr){
+			NodoLista* prev = nullptr;
+			while (nodo != nullptr) {
 				if (nodo->dom == dominio){
-					dev+= "/" + nodo->path + " ";
+					NodoLista* aBorrar = nodo;
+					if (prev == nullptr){
+						arrList[i] = nodo->sig;
+					}
+					else{
+						prev->sig = nodo->sig;
+					}
+					nodo = nodo->sig;
+					delete aBorrar;
+					this->cantidadDeElementos--;
+				} 
+				else{
+					prev = nodo;
+					nodo = nodo->sig;
+				}
+			}
+			i++;
+		}
+	}
+
+	string listarDominio(string dominio) {
+		string dev = "";
+		for (int i = 0; i < this->tamanio; i++) {
+			NodoLista* nodo = arrList[i];
+			while (nodo != nullptr) {
+				if (nodo->dom == dominio){
+					dev =nodo->path + " " + dev;
 				}
 				nodo = nodo->sig;
 			}
-			i++;
 		}
 		return dev;
 	}
 
-	void limpiarDominio(string dominio){
-		int i = 0;
-		while (i < this->tamanio) {
-			NodoLista* nodo = arrList[i];
-			while (nodo != nullptr){
-				if (nodo->dom == dominio){
-					eliminar(nodo->clave);
-					this->cantidadDeElementos = this->cantidadDeElementos--;
-				}
-			}
-			i++;
-		}
-	}
 
 	void limpiarTotal(){
 		int i = 0;
