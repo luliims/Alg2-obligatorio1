@@ -64,24 +64,3 @@ GrafoLista * kruskal(GrafoLista* g){
 
     return ACM;
 }
-
-
-int main(){
-    GrafoLista * g = new GrafoLista(7, false, true);
-    g->agregarArista(1, 2, 2);
-    g->agregarArista(1, 3, 4);
-    g->agregarArista(1, 4, 1);
-    g->agregarArista(2, 4, 3);
-    g->agregarArista(2, 5, 10);
-    g->agregarArista(3, 4, 2);
-    g->agregarArista(3, 6, 5);
-    g->agregarArista(4, 5, 7);
-    g->agregarArista(4, 6, 8);
-    g->agregarArista(4, 7, 4);
-    g->agregarArista(5, 7, 6);
-    g->agregarArista(6, 7, 1);
-
-    GrafoLista * ACM = kruskal(g);
-    ACM->imprimir();
-    return 0;
-}
