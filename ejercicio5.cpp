@@ -21,17 +21,17 @@ int main() {
         i++;
     }
 
-    GrafoLista* ACM = kruskal(g);
+    GrafoLista* mst = kruskal(g);
 
     int pesoTotal = 0;
     int j = 1; 
     while (j <= V){
-        Arista* ady = ACM->adyacentes(j);
+        Arista* ady = mst->adyacentes(j);
         while (ady){
-            if (i < ACM->getDestino(ady)){
-                pesoTotal += ACM->getPeso(ady);
+            if (i < mst->getDestino(ady)){
+                pesoTotal += mst->getPeso(ady);
             }
-            ady = ACM->getSig(ady);
+            ady = mst->getSig(ady);
         }
         j++;
     }
