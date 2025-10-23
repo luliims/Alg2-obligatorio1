@@ -22,7 +22,6 @@ typedef NodoLista *Lista;
 class TablaHashAbierta_Agenda
 {
 private:
-	// typedef NodoLista *Lista;
 	Lista *arrList;
 	int tamanio;
 	int cantidadDeElementos;
@@ -51,26 +50,6 @@ private:
 		return (float)this->cantidadDeElementos / this->tamanio;
 	}
 
-	// Retorna true si la clave ya existe
-	bool insertarRecusrivo(string unaClave, int unValor, string dom, string path, string aTitle, int aTime, NodoLista *&ptr)
-	{
-		if (ptr == NULL)
-		{
-			ptr = new NodoLista(unaClave, unValor, dom, path, aTitle, aTime);
-			return false;
-		}
-		else
-		{
-			if (ptr->dom == dom && ptr->path == path){ //falta que actualice el orden
-				ptr->valor = unValor;
-				ptr->title = aTitle;
-				ptr->time = aTime;
-				return true; 
-			}
-			else return insertarRecusrivo(unaClave, unValor, dom, path, aTitle, aTime, ptr->sig);
-		}
-	}
-
 public:
 	TablaHashAbierta_Agenda(int tamaniInicial)
 	{
@@ -87,11 +66,33 @@ public:
 		return sum;
 	}
 
-	void insertar(string unaClave, int unValor, string aDom, string aPath, string aTitle, int aTime)
-	{
+	void insertar(string unaClave, int unValor, string dom, string path, string aTitle, int aTime){ //mezcla entre insertar e insertarRecursivo para que actualice el orden cuando actualizo un dato
 		int pos = abs(this->fnHash(unaClave)) % this->tamanio;
-		if (!this->insertarRecusrivo(unaClave, unValor, aDom, aPath, aTitle, aTime, arrList[pos])) this->cantidadDeElementos++;
-		if (this->factorDeCarga() > 0.7) this->rehash();
+		NodoLista* nodo = arrList[pos];
+		NodoLista* prev = nullptr;
+		while (nodo != nullptr) {
+			if (nodo->dom == dom && nodo->path == path) { //existe el nodo - actualizo datos, muevo el parth al  principio
+				nodo->valor = unValor;
+				nodo->title = aTitle;
+				nodo->time = aTime;
+				if (prev != nullptr){
+					prev->sig = nodo->sig;
+					nodo->sig = arrList[pos];
+					arrList[pos] = nodo;
+				}
+				return;
+			}
+			prev = nodo;
+			nodo = nodo->sig;
+		}
+		// no existe - insertar nuevo nodo
+		NodoLista* nuevo = new NodoLista(unaClave, unValor, dom, path, aTitle, aTime);
+		nuevo->sig = arrList[pos];
+		arrList[pos] = nuevo;
+		this->cantidadDeElementos++;
+		if (this->factorDeCarga() > 0.7){
+			this->rehash();
+		}
 	}
 
 	void imprimir()
@@ -228,15 +229,15 @@ public:
 		for (int i = 0; i < this->tamanio; i++) {
 			NodoLista* nodo = arrList[i];
 			while (nodo != nullptr) {
-				if (nodo->dom == dominio){
-					dev =nodo->path + " " + dev;
+				if (nodo->dom == dominio) {
+					if (!dev.empty()) dev += " ";
+					dev = dev + nodo->path;
 				}
 				nodo = nodo->sig;
 			}
 		}
 		return dev;
 	}
-
 
 	void limpiarTotal(){
 		int i = 0;
