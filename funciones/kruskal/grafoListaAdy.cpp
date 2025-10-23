@@ -72,4 +72,22 @@ class GrafoLista {
 		int cantidadAristas() {
 			return cantidadA;
 		}
+
+        int getOrigen(Arista *e){ 
+            return e->origen;
+        }
+
+        int getDestino(Arista *e){
+            return e->destino; 
+        }
+        int getPeso(Arista *e){ 
+            return e->peso; 
+        }
+        Arista* getSig(Arista *e){ 
+            return e->sig; 
+        }
+
+        void setSig(Arista *e, Arista* s){ 
+            e->sig = s; 
+        }
 };

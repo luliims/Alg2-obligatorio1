@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 #include <limits>
+#include "funciones/kruskal/grafoListaAdy.cpp"
 #include "funciones/kruskal/kruskal.cpp"
 
 
@@ -12,27 +13,28 @@ int main() {
     cin >> V >> E;
 
     GrafoLista* g = new GrafoLista(V, false, true);
-
-    for (int i = 0; i < E; i++) {
+    int i = 0;
+    while(i < E){
         int u, v, w;
         cin >> u >> v >> w;
-        // ajustamos índices si la entrada es de 0..V-1
         g->agregarArista(u + 1, v + 1, w);
+        i++;
     }
 
     GrafoLista* ACM = kruskal(g);
 
     int pesoTotal = 0;
-    for (int i = 1; i <= V; i++) {
-        Arista* ady = ACM->adyacentes(i);
-        while (ady) {
-            if (i < ady->destino)  // sumar solo una vez cada arista
-                pesoTotal += ady->peso;
-            ady = ady->sig;
+    int j = 1; 
+    while (j <= V){
+        Arista* ady = ACM->adyacentes(j);
+        while (ady){
+            if (i < ACM->getDestino(ady)){
+                pesoTotal += ACM->getPeso(ady);
+            }
+            ady = ACM->getSig(ady);
         }
+        j++;
     }
-
     cout << pesoTotal << endl;
-
     return 0;
 }
